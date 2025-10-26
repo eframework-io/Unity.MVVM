@@ -1,0 +1,6 @@
+{
+    "name": "EFramework.Unity.MVVM",
+    "module": "index.js",
+    "types": "index.d.ts",
+    "type": "module"
+}

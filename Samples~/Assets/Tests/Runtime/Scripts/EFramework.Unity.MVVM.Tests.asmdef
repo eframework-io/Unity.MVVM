@@ -1,0 +1,10 @@
+{
+    "name": "EFramework.Unity.MVVM.Tests",
+    "references": [
+        "EFramework.Unity.MVVM",
+        "EFramework.Unity.Utility"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ]
+}
