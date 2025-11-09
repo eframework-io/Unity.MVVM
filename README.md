@@ -1,11 +1,11 @@
-# Unity.MVVM
+# EFramework MVVM for Unity
 
 [![NPM](https://img.shields.io/npm/v/io.eframework.unity.mvvm?label=NPM&logo=npm)](https://www.npmjs.com/package/io.eframework.unity.mvvm)
 [![UPM](https://img.shields.io/npm/v/io.eframework.unity.mvvm?label=UPM&logo=unity&registry_uri=https://package.openupm.com)](https://openupm.com/packages/io.eframework.unity.mvvm)
 [![DeepWiki](https://img.shields.io/badge/DeepWiki-Explore-blue)](https://deepwiki.com/eframework-io/Unity.MVVM)
 [![Discord](https://img.shields.io/discord/1422114598835851286?label=Discord&logo=discord)](https://discord.gg/XMPx2wXSz3)
 
-Unity.MVVM 是一个专为 Unity 设计的模块化 MVVM 框架，解耦业务逻辑与视图，内置模块和场景管理。
+专为 Unity 设计的模块化 MVVM 框架，解耦业务逻辑与视图，内置模块和场景管理。
 
 ## 功能特性
 
