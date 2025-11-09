@@ -189,11 +189,11 @@ public class TestXView
     {
         // 验证Meta基本属性
         var meta = new XView.Meta("TestView", 10, XView.EventType.Dynamic, XView.CacheType.None, true);
-        Assert.AreEqual("TestView", meta.Path, "Meta的Path属性应当正确设置为指定值");
-        Assert.AreEqual(10, meta.FixedRQ, "Meta的FixedRQ属性应当正确设置为指定值");
-        Assert.AreEqual(XView.EventType.Dynamic, meta.Focus, "Meta的Focus属性应当正确设置为指定值");
-        Assert.AreEqual(XView.CacheType.None, meta.Cache, "Meta的Cache属性应当正确设置为指定值");
-        Assert.AreEqual(true, meta.Multiple, "Meta的Multiple属性应当正确设置为指定值");
+        Assert.That(meta.Path, Is.EqualTo("TestView"), "Meta的Path属性应当正确设置为指定值");
+        Assert.That(meta.FixedRQ, Is.EqualTo(10), "Meta的FixedRQ属性应当正确设置为指定值");
+        Assert.That(meta.Focus, Is.EqualTo(XView.EventType.Dynamic), "Meta的Focus属性应当正确设置为指定值");
+        Assert.That(meta.Cache, Is.EqualTo(XView.CacheType.None), "Meta的Cache属性应当正确设置为指定值");
+        Assert.That(meta.Multiple, Is.True, "Meta的Multiple属性应当正确设置为指定值");
     }
 
     [Test]
@@ -219,12 +219,12 @@ public class TestXView
             myView.OnEvent2Param = 0;
             MyModule.Instance.Event.Notify(MyEvent.Event2, 1002);
 
-            Assert.IsTrue(myView.OnEvent2Called, "特性绑定模块注册事件后触发通知应当调用回调函数。");
-            Assert.AreEqual(myView.OnEvent2Param, 1002, "特性绑定模块注册事件后触发通知调用回调函数的透传参数1应当相等。");
+            Assert.That(myView.OnEvent2Called, Is.True, "特性绑定模块注册事件后触发通知应当调用回调函数。");
+            Assert.That(myView.OnEvent2Param, Is.EqualTo(1002), "特性绑定模块注册事件后触发通知调用回调函数的透传参数1应当相等。");
 
             myView.OnEvent2Called = false;
             MyModule.Instance.Event.Notify(MyEvent.Event2);
-            Assert.IsFalse(myView.OnEvent2Called, "特性绑定模块再次触发回调一次的事件应当不调用回调函数。");
+            Assert.That(myView.OnEvent2Called, Is.False, "特性绑定模块再次触发回调一次的事件应当不调用回调函数。");
         }
         #endregion
 
@@ -234,12 +234,12 @@ public class TestXView
             myModularView.OnEvent3Param = 0;
             MyModule.Instance.Event.Notify(MyEvent.Event3, 1003);
 
-            Assert.IsTrue(myModularView.OnEvent3Called, "特性默认模块注册事件后触发通知应当调用回调函数。");
-            Assert.AreEqual(myModularView.OnEvent3Param, 1003, "特性默认模块注册事件后触发通知调用回调函数的透传参数1应当相等。");
+            Assert.That(myModularView.OnEvent3Called, Is.True, "特性默认模块注册事件后触发通知应当调用回调函数。");
+            Assert.That(myModularView.OnEvent3Param, Is.EqualTo(1003), "特性默认模块注册事件后触发通知调用回调函数的透传参数1应当相等。");
 
             myModularView.OnEvent3Called = false;
             MyModule.Instance.Event.Notify(MyEvent.Event3, 1003);
-            Assert.IsTrue(myModularView.OnEvent3Called, "特性默认模块注册事件后再次触发通知应当调用回调函数。");
+            Assert.That(myModularView.OnEvent3Called, Is.True, "特性默认模块注册事件后再次触发通知应当调用回调函数。");
         }
         #endregion
 
@@ -253,19 +253,19 @@ public class TestXView
             MyModule.Instance.Event.Notify(MyEvent.Event3, 1003);
             MyModule.Instance.Event.Notify(MyEvent.Event4, 1004, true);
 
-            Assert.IsTrue(mySubView.OnEvent3Called, "特性继承模块注册事件后触发通知应当调用父类回调函数。");
-            Assert.AreEqual(mySubView.OnEvent3Param, 1003, "特性继承模块注册事件后触发通知调用父类回调函数的透传参数1应当相等。");
+            Assert.That(mySubView.OnEvent3Called, Is.True, "特性继承模块注册事件后触发通知应当调用父类回调函数。");
+            Assert.That(mySubView.OnEvent3Param, Is.EqualTo(1003), "特性继承模块注册事件后触发通知调用父类回调函数的透传参数1应当相等。");
 
-            Assert.IsTrue(mySubView.OnEvent4Called, "特性继承模块注册事件后触发通知应当调用子类回调函数。");
-            Assert.AreEqual(mySubView.OnEvent4Param1, 1004, "特性继承模块注册事件后触发通知调用子类回调函数的透传参数1应当相等。");
-            Assert.AreEqual(mySubView.OnEvent4Param2, true, "特性继承模块注册事件后触发通知调用子类回调函数的透传参数2应当相等。");
+            Assert.That(mySubView.OnEvent4Called, Is.True, "特性继承模块注册事件后触发通知应当调用子类回调函数。");
+            Assert.That(mySubView.OnEvent4Param1, Is.EqualTo(1004), "特性继承模块注册事件后触发通知调用子类回调函数的透传参数1应当相等。");
+            Assert.That(mySubView.OnEvent4Param2, Is.True, "特性继承模块注册事件后触发通知调用子类回调函数的透传参数2应当相等。");
 
             mySubView.OnEvent3Called = false;
             mySubView.OnEvent4Called = false;
             MyModule.Instance.Event.Notify(MyEvent.Event3, 1003);
             MyModule.Instance.Event.Notify(MyEvent.Event4, 1004, false);
-            Assert.IsTrue(mySubView.OnEvent3Called, "特性继承模块注册事件后再次触发通知应当调用父类回调函数。");
-            Assert.IsTrue(mySubView.OnEvent4Called, "特性继承模块注册事件后再次触发通知应当调用子类回调函数。");
+            Assert.That(mySubView.OnEvent3Called, Is.True, "特性继承模块注册事件后再次触发通知应当调用父类回调函数。");
+            Assert.That(mySubView.OnEvent4Called, Is.True, "特性继承模块注册事件后再次触发通知应当调用子类回调函数。");
         }
         #endregion
 
@@ -280,26 +280,26 @@ public class TestXView
                 object[] param1 = null;
                 void callback(params object[] args) { called = true; param1 = args; }
 
-                Assert.IsTrue(view.Event.Register(MyEvent.Event1, callback, true), "非泛型注册事件应当成功。");
+                Assert.That(view.Event.Register(MyEvent.Event1, callback, true), Is.True, "非泛型注册事件应当成功。");
                 context.Notify(MyEvent.Event1, 1001);
-                Assert.IsTrue(called, "非泛型注册事件后触发通知应当调用回调函数。");
-                Assert.AreEqual(param1[0], 1001, "非泛型注册事件后触发通知调用回调函数的透传参数1应当相等。");
+                Assert.That(called, Is.True, "非泛型注册事件后触发通知应当调用回调函数。");
+                Assert.That(param1[0], Is.EqualTo(1001), "非泛型注册事件后触发通知调用回调函数的透传参数1应当相等。");
 
                 called = false;
                 context.Notify(MyEvent.Event1);
-                Assert.IsFalse(called, "非泛型再次触发回调一次的事件应当不调用回调函数。");
+                Assert.That(called, Is.False, "非泛型再次触发回调一次的事件应当不调用回调函数。");
 
-                Assert.IsTrue(view.Event.Register(MyEvent.Event1, callback, false), "非泛型注册事件应当成功。");
-                Assert.IsTrue(view.Event.Unregister(MyEvent.Event1, callback), "非泛型注销事件应当成功。");
+                Assert.That(view.Event.Register(MyEvent.Event1, callback, false), Is.True, "非泛型注册事件应当成功。");
+                Assert.That(view.Event.Unregister(MyEvent.Event1, callback), Is.True, "非泛型注销事件应当成功。");
                 called = false;
                 context.Notify(MyEvent.Event1);
-                Assert.IsFalse(called, "非泛型注销事件后触发通知应当不调用回调函数。");
+                Assert.That(called, Is.False, "非泛型注销事件后触发通知应当不调用回调函数。");
 
-                Assert.IsTrue(view.Event.Register(MyEvent.Event1, callback, false), "非泛型注册事件应当成功。");
+                Assert.That(view.Event.Register(MyEvent.Event1, callback, false), Is.True, "非泛型注册事件应当成功。");
                 view.Event.Clear();
                 called = false;
                 context.Notify(MyEvent.Event1);
-                Assert.IsFalse(called, "非泛型清除事件后触发通知应当不调用回调函数。");
+                Assert.That(called, Is.False, "非泛型清除事件后触发通知应当不调用回调函数。");
             }
             #endregion
 
@@ -309,26 +309,26 @@ public class TestXView
                 var param1 = 0;
                 void callback(int p1) { called = true; param1 = p1; }
 
-                Assert.IsTrue(view.Event.Register<int>(MyEvent.Event1, callback, true), "泛型 <T1> 注册事件应当成功。");
+                Assert.That(view.Event.Register<int>(MyEvent.Event1, callback, true), Is.True, "泛型 <T1> 注册事件应当成功。");
                 context.Notify(MyEvent.Event1, 1001);
-                Assert.IsTrue(called, "泛型 <T1> 注册事件后触发通知应当调用回调函数。");
-                Assert.AreEqual(param1, 1001, "泛型 <T1> 注册事件后触发通知调用回调函数的透传参数1应当相等。");
+                Assert.That(called, Is.True, "泛型 <T1> 注册事件后触发通知应当调用回调函数。");
+                Assert.That(param1, Is.EqualTo(1001), "泛型 <T1> 注册事件后触发通知调用回调函数的透传参数1应当相等。");
 
                 called = false;
                 context.Notify(MyEvent.Event1);
-                Assert.IsFalse(called, "泛型 <T1> 再次触发回调一次的事件应当不调用回调函数。");
+                Assert.That(called, Is.False, "泛型 <T1> 再次触发回调一次的事件应当不调用回调函数。");
 
-                Assert.IsTrue(view.Event.Register<int>(MyEvent.Event1, callback, false), "泛型 <T1> 注册事件应当成功。");
-                Assert.IsTrue(view.Event.Unregister<int>(MyEvent.Event1, callback), "泛型 <T1> 注销事件应当成功。");
+                Assert.That(view.Event.Register<int>(MyEvent.Event1, callback, false), Is.True, "泛型 <T1> 注册事件应当成功。");
+                Assert.That(view.Event.Unregister<int>(MyEvent.Event1, callback), Is.True, "泛型 <T1> 注销事件应当成功。");
                 called = false;
                 context.Notify(MyEvent.Event1);
-                Assert.IsFalse(called, "泛型 <T1> 注销事件后触发通知应当不调用回调函数。");
+                Assert.That(called, Is.False, "泛型 <T1> 注销事件后触发通知应当不调用回调函数。");
 
-                Assert.IsTrue(view.Event.Register<int>(MyEvent.Event1, callback, false), "泛型 <T1> 注册事件应当成功。");
+                Assert.That(view.Event.Register<int>(MyEvent.Event1, callback, false), Is.True, "泛型 <T1> 注册事件应当成功。");
                 view.Event.Clear();
                 called = false;
                 context.Notify(MyEvent.Event1);
-                Assert.IsFalse(called, "泛型 <T1> 清除事件后触发通知应当不调用回调函数。");
+                Assert.That(called, Is.False, "泛型 <T1> 清除事件后触发通知应当不调用回调函数。");
             }
             #endregion
 
@@ -339,27 +339,27 @@ public class TestXView
                 var param2 = 0;
                 void callback(int p1, int p2) { called = true; param1 = p1; param2 = p2; }
 
-                Assert.IsTrue(view.Event.Register<int, int>(MyEvent.Event1, callback, true), "泛型 <T1, T2> 注册事件应当成功。");
+                Assert.That(view.Event.Register<int, int>(MyEvent.Event1, callback, true), Is.True, "泛型 <T1, T2> 注册事件应当成功。");
                 context.Notify(MyEvent.Event1, 1001, 1002);
-                Assert.IsTrue(called, "泛型 <T1, T2> 注册事件后触发通知应当调用回调函数。");
-                Assert.AreEqual(param1, 1001, "泛型 <T1, T2> 注册事件后触发通知调用回调函数的透传参数1应当相等。");
-                Assert.AreEqual(param2, 1002, "泛型 <T1, T2> 注册事件后触发通知调用回调函数的透传参数2应当相等。");
+                Assert.That(called, Is.True, "泛型 <T1, T2> 注册事件后触发通知应当调用回调函数。");
+                Assert.That(param1, Is.EqualTo(1001), "泛型 <T1, T2> 注册事件后触发通知调用回调函数的透传参数1应当相等。");
+                Assert.That(param2, Is.EqualTo(1002), "泛型 <T1, T2> 注册事件后触发通知调用回调函数的透传参数2应当相等。");
 
                 called = false;
                 context.Notify(MyEvent.Event1);
-                Assert.IsFalse(called, "泛型 <T1, T2> 再次触发回调一次的事件应当不调用回调函数。");
+                Assert.That(called, Is.False, "泛型 <T1, T2> 再次触发回调一次的事件应当不调用回调函数。");
 
-                Assert.IsTrue(view.Event.Register<int, int>(MyEvent.Event1, callback, false), "泛型 <T1, T2> 注册事件应当成功。");
-                Assert.IsTrue(view.Event.Unregister<int, int>(MyEvent.Event1, callback), "泛型 <T1, T2> 注销事件应当成功。");
+                Assert.That(view.Event.Register<int, int>(MyEvent.Event1, callback, false), Is.True, "泛型 <T1, T2> 注册事件应当成功。");
+                Assert.That(view.Event.Unregister<int, int>(MyEvent.Event1, callback), Is.True, "泛型 <T1, T2> 注销事件应当成功。");
                 called = false;
                 context.Notify(MyEvent.Event1);
-                Assert.IsFalse(called, "泛型 <T1, T2> 注销事件后触发通知应当不调用回调函数。");
+                Assert.That(called, Is.False, "泛型 <T1, T2> 注销事件后触发通知应当不调用回调函数。");
 
-                Assert.IsTrue(view.Event.Register<int, int>(MyEvent.Event1, callback, false), "泛型 <T1, T2> 注册事件应当成功。");
+                Assert.That(view.Event.Register<int, int>(MyEvent.Event1, callback, false), Is.True, "泛型 <T1, T2> 注册事件应当成功。");
                 view.Event.Clear();
                 called = false;
                 context.Notify(MyEvent.Event1);
-                Assert.IsFalse(called, "泛型 <T1, T2> 清除事件后触发通知应当不调用回调函数。");
+                Assert.That(called, Is.False, "泛型 <T1, T2> 清除事件后触发通知应当不调用回调函数。");
             }
             #endregion
 
@@ -371,28 +371,28 @@ public class TestXView
                 var param3 = 0;
                 void callback(int p1, int p2, int p3) { called = true; param1 = p1; param2 = p2; param3 = p3; }
 
-                Assert.IsTrue(view.Event.Register<int, int, int>(MyEvent.Event1, callback, true), "泛型 <T1, T2, T3> 注册事件应当成功。");
+                Assert.That(view.Event.Register<int, int, int>(MyEvent.Event1, callback, true), Is.True, "泛型 <T1, T2, T3> 注册事件应当成功。");
                 context.Notify(MyEvent.Event1, 1001, 1002, 1003);
-                Assert.IsTrue(called, "泛型 <T1, T2, T3> 注册事件后触发通知应当调用回调函数。");
-                Assert.AreEqual(param1, 1001, "泛型 <T1, T2, T3> 注册事件后触发通知调用回调函数的透传参数1应当相等。");
-                Assert.AreEqual(param2, 1002, "泛型 <T1, T2, T3> 注册事件后触发通知调用回调函数的透传参数2应当相等。");
-                Assert.AreEqual(param3, 1003, "泛型 <T1, T2, T3> 注册事件后触发通知调用回调函数的透传参数3应当相等。");
+                Assert.That(called, Is.True, "泛型 <T1, T2, T3> 注册事件后触发通知应当调用回调函数。");
+                Assert.That(param1, Is.EqualTo(1001), "泛型 <T1, T2, T3> 注册事件后触发通知调用回调函数的透传参数1应当相等。");
+                Assert.That(param2, Is.EqualTo(1002), "泛型 <T1, T2, T3> 注册事件后触发通知调用回调函数的透传参数2应当相等。");
+                Assert.That(param3, Is.EqualTo(1003), "泛型 <T1, T2, T3> 注册事件后触发通知调用回调函数的透传参数3应当相等。");
 
                 called = false;
                 context.Notify(MyEvent.Event1);
-                Assert.IsFalse(called, "泛型 <T1, T2, T3> 再次触发回调一次的事件应当不调用回调函数。");
+                Assert.That(called, Is.False, "泛型 <T1, T2, T3> 再次触发回调一次的事件应当不调用回调函数。");
 
-                Assert.IsTrue(view.Event.Register<int, int, int>(MyEvent.Event1, callback, false), "泛型 <T1, T2, T3> 注册事件应当成功。");
-                Assert.IsTrue(view.Event.Unregister<int, int, int>(MyEvent.Event1, callback), "泛型 <T1, T2, T3> 注销事件应当成功。");
+                Assert.That(view.Event.Register<int, int, int>(MyEvent.Event1, callback, false), Is.True, "泛型 <T1, T2, T3> 注册事件应当成功。");
+                Assert.That(view.Event.Unregister<int, int, int>(MyEvent.Event1, callback), Is.True, "泛型 <T1, T2, T3> 注销事件应当成功。");
                 called = false;
                 context.Notify(MyEvent.Event1);
-                Assert.IsFalse(called, "泛型 <T1, T2, T3> 注销事件后触发通知应当不调用回调函数。");
+                Assert.That(called, Is.False, "泛型 <T1, T2, T3> 注销事件后触发通知应当不调用回调函数。");
 
-                Assert.IsTrue(view.Event.Register<int, int, int>(MyEvent.Event1, callback, false), "泛型 <T1, T2, T3> 注册事件应当成功。");
+                Assert.That(view.Event.Register<int, int, int>(MyEvent.Event1, callback, false), Is.True, "泛型 <T1, T2, T3> 注册事件应当成功。");
                 view.Event.Clear();
                 called = false;
                 context.Notify(MyEvent.Event1);
-                Assert.IsFalse(called, "泛型 <T1, T2, T3> 清除事件后触发通知应当不调用回调函数。");
+                Assert.That(called, Is.False, "泛型 <T1, T2, T3> 清除事件后触发通知应当不调用回调函数。");
             }
             #endregion
 
@@ -408,10 +408,10 @@ public class TestXView
                 view.Event.Register<int, int, int>(MyEvent.Event1, (_, _, _) => calledT3 = true, false);
                 UnityEngine.Object.DestroyImmediate(view);
                 context.Notify(MyEvent.Event1);
-                Assert.IsFalse(called, "非泛型删除对象后触发通知应当不调用回调函数。");
-                Assert.IsFalse(calledT1, "泛型 <T1> 删除对象后触发通知应当不调用回调函数。");
-                Assert.IsFalse(calledT2, "泛型 <T1, T2> 删除对象后触发通知应当不调用回调函数。");
-                Assert.IsFalse(calledT3, "泛型 <T1, T2, T3> 删除对象后触发通知应当不调用回调函数。");
+                Assert.That(called, Is.False, "非泛型删除对象后触发通知应当不调用回调函数。");
+                Assert.That(calledT1, Is.False, "泛型 <T1> 删除对象后触发通知应当不调用回调函数。");
+                Assert.That(calledT2, Is.False, "泛型 <T1, T2> 删除对象后触发通知应当不调用回调函数。");
+                Assert.That(calledT3, Is.False, "泛型 <T1, T2, T3> 删除对象后触发通知应当不调用回调函数。");
             }
             #endregion
         }
@@ -422,8 +422,8 @@ public class TestXView
     {
         #region 未标记元素特性
         {
-            Assert.IsNull(XView.Element.Get(null), "对空类型获取元素特性应当返回空。");
-            Assert.AreEqual(XView.Element.Get(typeof(MyView)).Length, 0, "对空类型获取元素特性应当返回空。");
+            Assert.That(XView.Element.Get(null), Is.Null, "对空类型获取元素特性应当返回空。");
+            Assert.That(XView.Element.Get(typeof(MyView)).Length, Is.EqualTo(0), "对空类型获取元素特性应当返回空。");
         }
         #endregion
 
@@ -432,18 +432,18 @@ public class TestXView
             var type = typeof(MyModularView);
             var elements = XView.Element.Get(type);
 
-            Assert.NotNull(elements, "对标记的父类型获取元素特性不应当为空。");
-            Assert.AreEqual(3, elements.Length, "对标记的父类型获取元素特性数量应当为 2。");
+            Assert.That(elements, Is.Not.Null, "对标记的父类型获取元素特性不应当为空。");
+            Assert.That(elements.Length, Is.EqualTo(3), "对标记的父类型获取元素特性数量应当为 2。");
 
-            Assert.AreEqual("MyModularView Class Attr", elements[0].Name, "父类标记在类上的元素特性的名称应当和设置的相等。");
-            Assert.AreEqual(type, elements[0].Reflect, "父类标记在类上的元素特性的反射信息应当和所属类相等。");
+            Assert.That(elements[0].Name, Is.EqualTo("MyModularView Class Attr"), "父类标记在类上的元素特性的名称应当和设置的相等。");
+            Assert.That(elements[0].Reflect, Is.EqualTo(type), "父类标记在类上的元素特性的反射信息应当和所属类相等。");
 
-            Assert.AreEqual("MyModularView Class Attr Extras", elements[1].Name, "父类标记在类上的元素特性的名称应当和设置的相等。");
-            Assert.AreEqual(type, elements[1].Reflect, "父类标记在类上的元素特性的反射信息应当和所属类相等。");
-            Assert.AreEqual("Hello MyModularView", elements[1].Extras[0], "父类标记在类上的元素特性的参数应当和设置的相等。");
+            Assert.That(elements[1].Name, Is.EqualTo("MyModularView Class Attr Extras"), "父类标记在类上的元素特性的名称应当和设置的相等。");
+            Assert.That(elements[1].Reflect, Is.EqualTo(type), "父类标记在类上的元素特性的反射信息应当和所属类相等。");
+            Assert.That(elements[1].Extras[0], Is.EqualTo("Hello MyModularView"), "父类标记在类上的元素特性的参数应当和设置的相等。");
 
-            Assert.AreEqual("MyModularView Method Attr", elements[2].Name, "父类标记在方法上的元素特性的名称应当和设置的相等。");
-            Assert.AreEqual(type.GetMember("OnEvent3")[0], elements[2].Reflect, "父类标记在方法上的元素特性的反射信息应当和所属方法相等。");
+            Assert.That(elements[2].Name, Is.EqualTo("MyModularView Method Attr"), "父类标记在方法上的元素特性的名称应当和设置的相等。");
+            Assert.That(elements[2].Reflect, Is.EqualTo(type.GetMember("OnEvent3")[0]), "父类标记在方法上的元素特性的反射信息应当和所属方法相等。");
         }
         #endregion
 
@@ -452,26 +452,26 @@ public class TestXView
             var type = typeof(MySubView);
             var elements = XView.Element.Get(type);
 
-            Assert.NotNull(elements, "对标记的子类型获取元素特性不应当为空。");
-            Assert.AreEqual(8, elements.Length, "对标记的子类型获取元素特性数量应当为 5（父类 3 + 子类 5）。");
+            Assert.That(elements, Is.Not.Null, "对标记的子类型获取元素特性不应当为空。");
+            Assert.That(elements.Length, Is.EqualTo(8), "对标记的子类型获取元素特性数量应当为 5（父类 3 + 子类 5）。");
 
-            Assert.AreEqual("MySubView Class Attr", elements[0].Name, "子类标记在类上的元素特性的名称应当和设置的相等。");
-            Assert.AreEqual(type, elements[0].Reflect, "子类标记在类上的元素特性的反射信息应当和所属类相等。");
+            Assert.That(elements[0].Name, Is.EqualTo("MySubView Class Attr"), "子类标记在类上的元素特性的名称应当和设置的相等。");
+            Assert.That(elements[0].Reflect, Is.EqualTo(type), "子类标记在类上的元素特性的反射信息应当和所属类相等。");
 
-            Assert.AreEqual("MySubView Class Attr Extras", elements[1].Name, "子类标记在类上的元素特性的名称应当和设置的相等。");
-            Assert.AreEqual(type, elements[1].Reflect, "子类标记在类上的元素特性的反射信息应当和所属类相等。");
-            Assert.AreEqual("Hello MySubView", elements[1].Extras[0], "子类标记在类上的元素特性的参数应当和设置的相等。");
+            Assert.That(elements[1].Name, Is.EqualTo("MySubView Class Attr Extras"), "子类标记在类上的元素特性的名称应当和设置的相等。");
+            Assert.That(elements[1].Reflect, Is.EqualTo(type), "子类标记在类上的元素特性的反射信息应当和所属类相等。");
+            Assert.That(elements[1].Extras[0], Is.EqualTo("Hello MySubView"), "子类标记在类上的元素特性的参数应当和设置的相等。");
 
-            Assert.AreEqual("MySubView Method Attr Extras", elements[4].Name, "子类标记在方法上的元素特性的名称应当和设置的相等。");
-            Assert.AreEqual(type.GetMember("OnEvent4")[0], elements[4].Reflect, "子类标记在方法上的元素特性的反射信息应当和所属方法相等。");
-            Assert.AreEqual("Hello OnEvent4", elements[4].Extras[0], "子类标记在方法上的元素特性的参数应当和设置的相等。");
+            Assert.That(elements[4].Name, Is.EqualTo("MySubView Method Attr Extras"), "子类标记在方法上的元素特性的名称应当和设置的相等。");
+            Assert.That(elements[4].Reflect, Is.EqualTo(type.GetMember("OnEvent4")[0]), "子类标记在方法上的元素特性的反射信息应当和所属方法相等。");
+            Assert.That(elements[4].Extras[0], Is.EqualTo("Hello OnEvent4"), "子类标记在方法上的元素特性的参数应当和设置的相等。");
 
-            Assert.AreEqual("MySubView Field Attr", elements[6].Name, "子类标记在字段上的元素特性的名称应当和设置的相等。");
-            Assert.AreEqual(type.GetMember("OnEvent4Called")[0], elements[6].Reflect, "子类标记在字段上的元素特性的反射信息应当和所属字段相等。");
+            Assert.That(elements[6].Name, Is.EqualTo("MySubView Field Attr"), "子类标记在字段上的元素特性的名称应当和设置的相等。");
+            Assert.That(elements[6].Reflect, Is.EqualTo(type.GetMember("OnEvent4Called")[0]), "子类标记在字段上的元素特性的反射信息应当和所属字段相等。");
 
-            Assert.AreEqual("MySubView Field Attr Extras", elements[7].Name, "子类标记在字段上的元素特性的名称应当和设置的相等。");
-            Assert.AreEqual(type.GetMember("OnEvent4Param1")[0], elements[7].Reflect, "子类标记在字段上的元素特性的反射信息应当和所属字段相等。");
-            Assert.AreEqual("Hello OnEvent4Param1", elements[7].Extras[0], "子类标记在字段上的元素特性的参数应当和设置的相等。");
+            Assert.That(elements[7].Name, Is.EqualTo("MySubView Field Attr Extras"), "子类标记在字段上的元素特性的名称应当和设置的相等。");
+            Assert.That(elements[7].Reflect, Is.EqualTo(type.GetMember("OnEvent4Param1")[0]), "子类标记在字段上的元素特性的反射信息应当和所属字段相等。");
+            Assert.That(elements[7].Extras[0], Is.EqualTo("Hello OnEvent4Param1"), "子类标记在字段上的元素特性的参数应当和设置的相等。");
         }
         #endregion
     }
@@ -484,8 +484,8 @@ public class TestXView
         myView.Meta = testMeta;
         myView.Panel = testPanel;
 
-        Assert.IsNotNull(myView.Event, "视图的Event属性不应为空");
-        Assert.IsNotNull(myView.Tags, "视图的Tags属性不应为空");
+        Assert.That(myView.Event, Is.Not.Null, "视图的Event属性不应为空");
+        Assert.That(myView.Tags, Is.Not.Null, "视图的Tags属性不应为空");
 
         // 测试生命周期方法
         var openCalled = false;
@@ -498,16 +498,16 @@ public class TestXView
         myView.OnCloseCallback = () => closeCalled = true;
 
         myView.OnOpen();
-        Assert.IsTrue(openCalled, "OnOpen方法应当调用OnOpenCallback");
+        Assert.That(openCalled, Is.True, "OnOpen方法应当调用OnOpenCallback");
         myView.OnFocus();
-        Assert.IsTrue(focusCalled, "OnFocus方法应当调用OnFocusCallback");
+        Assert.That(focusCalled, Is.True, "OnFocus方法应当调用OnFocusCallback");
         myView.OnBlur();
-        Assert.IsTrue(blurCalled, "OnBlur方法应当调用OnBlurCallback");
+        Assert.That(blurCalled, Is.True, "OnBlur方法应当调用OnBlurCallback");
 
         var closeDoneCalled = false;
         myView.OnClose(() => closeDoneCalled = true);
-        Assert.IsTrue(closeCalled, "OnClose方法应当调用OnCloseCallback");
-        Assert.IsTrue(closeDoneCalled, "OnClose方法应当执行传入的done回调");
+        Assert.That(closeCalled, Is.True, "OnClose方法应当调用OnCloseCallback");
+        Assert.That(closeDoneCalled, Is.True, "OnClose方法应当执行传入的done回调");
     }
 
     #endregion
@@ -528,9 +528,9 @@ public class TestXView
         var nonCachedView = XView.Open(nonCachedMeta);
 
         // 确保视图的GameObject存在
-        Assert.IsNotNull(sceneCachedView.Panel, "SceneCached视图的GameObject应当存在");
-        Assert.IsNotNull(sharedCachedView.Panel, "SharedCached视图的GameObject应当存在");
-        Assert.IsNotNull(nonCachedView.Panel, "NonCached视图的GameObject应当存在");
+        Assert.That(sceneCachedView.Panel, Is.Not.Null, "SceneCached视图的GameObject应当存在");
+        Assert.That(sharedCachedView.Panel, Is.Not.Null, "SharedCached视图的GameObject应当存在");
+        Assert.That(nonCachedView.Panel, Is.Not.Null, "NonCached视图的GameObject应当存在");
         // 添加到缓存视图列表
         XView.cachedView.Add(sceneCachedView);
         XView.cachedView.Add(sharedCachedView);
@@ -542,13 +542,13 @@ public class TestXView
         yield return SceneManager.UnloadSceneAsync(scene);
 
         // 验证Scene类型的缓存视图被移除，而Shared类型的视图保留
-        Assert.AreEqual(2, XView.cachedView.Count, "缓存视图数量应当为2");
-        Assert.IsFalse(XView.cachedView.Contains(sceneCachedView), "SceneCached视图应当被移除");
-        Assert.IsTrue(XView.cachedView.Contains(sharedCachedView), "SharedCached视图应当保留");
-        Assert.IsTrue(XView.cachedView.Contains(nonCachedView), "NonCached视图只在关闭时销毁");
-        Assert.IsTrue(sceneCachedView.Panel == null && !sceneCachedView.Panel, "SceneCached视图的GameObject应当被销毁");
-        Assert.IsTrue(sharedCachedView.Panel != null && sharedCachedView.Panel, "SharedCached视图的GameObject应当仍然存在");
-        Assert.IsTrue(nonCachedView.Panel != null && nonCachedView.Panel, "NonCached视图只在关闭时销毁");
+        Assert.That(XView.cachedView.Count, Is.EqualTo(2), "缓存视图数量应当为2");
+        Assert.That(XView.cachedView.Contains(sceneCachedView), Is.False, "SceneCached视图应当被移除");
+        Assert.That(XView.cachedView.Contains(sharedCachedView), Is.True, "SharedCached视图应当保留");
+        Assert.That(XView.cachedView.Contains(nonCachedView), Is.True, "NonCached视图只在关闭时销毁");
+        Assert.That(sceneCachedView.Panel == null && !sceneCachedView.Panel, Is.True, "SceneCached视图的GameObject应当被销毁");
+        Assert.That(sharedCachedView.Panel != null && sharedCachedView.Panel, Is.True, "SharedCached视图的GameObject应当仍然存在");
+        Assert.That(nonCachedView.Panel != null && nonCachedView.Panel, Is.True, "NonCached视图只在关闭时销毁");
     }
 
     [Test]
@@ -558,50 +558,50 @@ public class TestXView
         // 1. 测试加载普通视图
         var normalMeta = new XView.Meta("NormalView", 0, XView.EventType.Dynamic, XView.CacheType.None, false);
         var normalView = XView.Load(normalMeta, parentTransform, false);
-        Assert.IsNotNull(normalView, "加载的视图不应为空");
-        Assert.AreEqual(normalMeta, normalView.Meta, "加载的视图Meta属性应当与传入的Meta一致");
-        Assert.IsNotNull(normalView.Panel, "加载的视图Panel不应为空");
-        Assert.IsTrue(normalView.Panel.activeSelf, "加载的视图Panel应当处于激活状态");
+        Assert.That(normalView, Is.Not.Null, "加载的视图不应为空");
+        Assert.That(normalView.Meta, Is.EqualTo(normalMeta), "加载的视图Meta属性应当与传入的Meta一致");
+        Assert.That(normalView.Panel, Is.Not.Null, "加载的视图Panel不应为空");
+        Assert.That(normalView.Panel.activeSelf, Is.True, "加载的视图Panel应当处于激活状态");
 
         // 2. 测试加载多实例视图
         var multipleMeta = new XView.Meta("MultipleView", 0, XView.EventType.Dynamic, XView.CacheType.None, true);
         var multipleView1 = XView.Load(multipleMeta, parentTransform, false);
         var multipleView2 = XView.Load(multipleMeta, parentTransform, false);
-        Assert.IsNotNull(multipleView1, "第一个多实例视图不应为空");
-        Assert.IsNotNull(multipleView2, "第二个多实例视图不应为空");
-        Assert.AreNotSame(multipleView1, multipleView2, "多实例视图应当创建不同的实例");
-        Assert.IsTrue(multipleView1.Panel.activeSelf);
+        Assert.That(multipleView1, Is.Not.Null, "第一个多实例视图不应为空");
+        Assert.That(multipleView2, Is.Not.Null, "第二个多实例视图不应为空");
+        Assert.That(multipleView1, Is.Not.SameAs(multipleView2), "多实例视图应当创建不同的实例");
+        Assert.That(multipleView1.Panel.activeSelf, Is.True, "多实例视图应当创建不同的实例");
 
         // 3. 测试加载已存在的非多实例视图 (closeIfOpened = false)
         // 先打开视图使其进入openedView列表
         var openedView = XView.Open(normalMeta);
-        Assert.IsNotNull(openedView, "打开的视图不应为空");
-        Assert.IsTrue(openedView.Panel.activeSelf, "打开的视图Panel应当处于激活状态");
+        Assert.That(openedView, Is.Not.Null, "打开的视图不应为空");
+        Assert.That(openedView.Panel.activeSelf, Is.True, "打开的视图Panel应当处于激活状态");
         // 尝试再次加载
         var existingView = XView.Load(normalMeta, parentTransform, false);
-        Assert.IsNotNull(existingView, "加载已存在视图不应为空");
-        Assert.AreSame(openedView, existingView, "closeIfOpened为false时应当返回已存在的视图实例");
+        Assert.That(existingView, Is.Not.Null, "加载已存在视图不应为空");
+        Assert.That(existingView, Is.SameAs(openedView), "closeIfOpened为false时应当返回已存在的视图实例");
 
         // 4. 测试加载已存在的非多实例视图 (closeIfOpened = true)
         XView.Close(normalMeta); // 先关闭之前的视图
         var openedViewAgain = XView.Open(normalMeta);
-        Assert.IsNotNull(openedViewAgain, "重新打开的视图不应为空");
+        Assert.That(openedViewAgain, Is.Not.Null, "重新打开的视图不应为空");
         // 尝试再次加载
         var newView = XView.Load(normalMeta, parentTransform, true);
-        Assert.IsNotNull(newView, "新加载的视图不应为空");
-        Assert.AreNotSame(openedViewAgain, newView, "closeIfOpened为true时应当创建新的视图实例");
-        Assert.IsTrue(openedViewAgain.Panel == null, "原视图实例应当被关闭并销毁");
+        Assert.That(newView, Is.Not.Null, "新加载的视图不应为空");
+        Assert.That(openedViewAgain, Is.Not.SameAs(newView), "closeIfOpened为true时应当创建新的视图实例");
+        Assert.That(openedViewAgain.Panel == null, Is.True, "原视图实例应当被关闭并销毁");
 
         // 5. 测试从缓存加载视图
         var cachedMeta = new XView.Meta("CachedView", 0, XView.EventType.Dynamic, XView.CacheType.Scene, false);
         var cachedView = XView.Open(cachedMeta);
-        Assert.IsNotNull(cachedView, "缓存类型视图应当成功创建");
+        Assert.That(cachedView, Is.Not.Null, "缓存类型视图应当成功创建");
         // 关闭视图使其进入缓存
         XView.Close(cachedMeta);
         // 再次加载，应该从缓存获取
         var reloadedView = XView.Load(cachedMeta, parentTransform, false);
-        Assert.IsNotNull(reloadedView, "从缓存加载的视图不应为空");
-        Assert.AreSame(cachedView, reloadedView, "应当从缓存中获取到相同的视图实例");
+        Assert.That(reloadedView, Is.Not.Null, "从缓存加载的视图不应为空");
+        Assert.That(reloadedView, Is.SameAs(cachedView), "应当从缓存中获取到相同的视图实例");
 
         if (parentTransform != null) UnityEngine.Object.Destroy(parentTransform.gameObject);
     }
@@ -611,9 +611,9 @@ public class TestXView
     {
         myHandler.bindingView = new object[3];
         var myView = testPanel.AddComponent<MyView>();
-        Assert.AreEqual(testPanel, myHandler.bindingView[0], "绑定回调的 go 对象应当和挂载的相等。");
-        Assert.AreEqual(myView, myHandler.bindingView[1], "绑定回调的 target 对象应当和挂载的相等。");
-        Assert.AreEqual(XView.Element.Get(typeof(MyView)), myHandler.bindingView[2], "绑定回调的 elements 列表应当和 XView.Element 获取的相等。");
+        Assert.That(myHandler.bindingView[0], Is.SameAs(testPanel), "绑定回调的 go 对象应当和挂载的相等。");
+        Assert.That(myHandler.bindingView[1], Is.SameAs(myView), "绑定回调的 target 对象应当和挂载的相等。");
+        Assert.That(myHandler.bindingView[2], Is.SameAs(XView.Element.Get(typeof(MyView))), "绑定回调的 elements 列表应当和 XView.Element 获取的相等。");
     }
 
     [UnityTest]
@@ -628,20 +628,20 @@ public class TestXView
         var view1 = XView.Open(meta1);
         var view2 = XView.Open(meta2);
         var view3 = XView.Open(meta3);
-        Assert.IsNotNull(view1, "视图1应当成功创建且不为空");
-        Assert.IsNotNull(view2, "视图2应当成功创建且不为空");
-        Assert.IsNotNull(view3, "视图3应当成功创建且不为空");
-        Assert.IsTrue(view1.Panel.activeSelf, "视图1的面板应当处于激活状态");
-        Assert.IsTrue(view2.Panel.activeSelf, "视图2的面板应当处于激活状态");
-        Assert.IsTrue(view3.Panel.activeSelf, "视图3的面板应当处于激活状态");
+        Assert.That(view1, Is.Not.Null, "视图1应当成功创建且不为空");
+        Assert.That(view2, Is.Not.Null, "视图2应当成功创建且不为空");
+        Assert.That(view3, Is.Not.Null, "视图3应当成功创建且不为空");
+        Assert.That(view1.Panel.activeSelf, Is.True, "视图1的面板应当处于激活状态");
+        Assert.That(view2.Panel.activeSelf, Is.True, "视图2的面板应当处于激活状态");
+        Assert.That(view3.Panel.activeSelf, Is.True, "视图3的面板应当处于激活状态");
 
         // 测试Close方法
         XView.Close(view1);
         XView.Close(view2);
         XView.Close(view3);
-        Assert.IsTrue(view1.Panel == null, "CacheType.None类型的视图关闭后Panel应当被销毁");
-        Assert.IsFalse(view2.Panel.activeSelf, "CacheType.Scene类型的视图关闭后Panel应当设为非活动状态");
-        Assert.IsFalse(view3.Panel.activeSelf, "CacheType.Shared类型的视图关闭后Panel应当设为非活动状态");
+        Assert.That(view1.Panel == null, Is.True, "CacheType.None类型的视图关闭后Panel应当被销毁");
+        Assert.That(view2.Panel.activeSelf, Is.False, "CacheType.Scene类型的视图关闭后Panel应当设为非活动状态");
+        Assert.That(view3.Panel.activeSelf, Is.False, "CacheType.Shared类型的视图关闭后Panel应当设为非活动状态");
 
         // 测试异步操作
         var asyncMeta = new XView.Meta("AsyncView");
@@ -650,11 +650,11 @@ public class TestXView
         yield return XView.OpenAsync(asyncMeta, (view) =>
         {
             callbackCalled = true;
-            Assert.IsNotNull(view, "异步加载的视图不应为空");
-            Assert.AreEqual(asyncMeta.Path, view.Meta.Path, "异步加载的视图Meta路径应当与传入的Meta一致");
+            Assert.That(view, Is.Not.Null, "异步加载的视图不应为空");
+            Assert.That(view.Meta.Path, Is.EqualTo(asyncMeta.Path), "异步加载的视图Meta路径应当与传入的Meta一致");
         });
 
-        Assert.IsTrue(callbackCalled, "异步加载完成后应当调用回调函数");
+        Assert.That(callbackCalled, Is.True, "异步加载完成后应当调用回调函数");
     }
 
     [Test]
@@ -669,30 +669,30 @@ public class TestXView
         var view2 = XView.Open(meta2);
         var view3 = XView.Open(meta3);
 
-        Assert.IsNotNull(view1);
-        Assert.IsNotNull(view2);
-        Assert.IsNotNull(view3);
+        Assert.That(view1, Is.Not.Null, "视图1应当不为空");
+        Assert.That(view2, Is.Not.Null, "视图2应当不为空");
+        Assert.That(view3, Is.Not.Null, "视图3应当不为空");
 
         XView.Close(meta1);
-        Assert.IsFalse(view1.Panel.activeSelf, "视图1应当被关闭且处于非激活状态");
+        Assert.That(view1.Panel.activeSelf, Is.False, "视图1应当被关闭且处于非激活状态");
 
         XView.Open(meta1);
         XView.Close(view1);
-        Assert.IsFalse(view1.Panel.activeSelf, "视图1应当被关闭且处于非激活状态");
+        Assert.That(view1.Panel.activeSelf, Is.False, "视图1应当被关闭且处于非激活状态");
 
         XView.Open(meta1);
         XView.CloseAll(meta1); // 关闭除meta1外的所有界面
-        Assert.IsTrue(view1.Panel.activeSelf, "排除的视图1应当保持激活状态");
-        Assert.IsFalse(view2.Panel.activeSelf, "视图2应当被关闭且处于非激活状态");
-        Assert.IsFalse(view3.Panel.activeSelf, "视图3应当被关闭且处于非激活状态");
+        Assert.That(view1.Panel.activeSelf, Is.True, "排除的视图1应当保持激活状态");
+        Assert.That(view2.Panel.activeSelf, Is.False, "视图2应当被关闭且处于非激活状态");
+        Assert.That(view3.Panel.activeSelf, Is.False, "视图3应当被关闭且处于非激活状态");
 
         XView.DestroyAll(meta1);
-        Assert.IsNotNull(view1.Panel, "排除的视图1应当不为空");
-        Assert.IsTrue(view2.Panel == null, "销毁的视图2应当为空");
-        Assert.IsTrue(view2.Panel == null, "销毁的视图3应当为空");
+        Assert.That(view1.Panel, Is.Not.Null, "排除的视图1应当不为空");
+        Assert.That(view2.Panel == null, Is.True, "销毁的视图2应当为空");
+        Assert.That(view3.Panel == null, Is.True, "销毁的视图3应当为空");
 
         XView.DestroyAll();
-        Assert.IsTrue(view1.Panel == null, "销毁的视图1应当为空");
+        Assert.That(view1.Panel == null, Is.True, "销毁的视图1应当为空");
     }
 
     [Test]
@@ -711,22 +711,22 @@ public class TestXView
         // 测试view被添加到below视图之前
         XView.Sort(view2, view1, null);
         XView.Sort(view1, null, null);
-        Assert.AreEqual(1, XView.openedView.IndexOf(view1), "view1应当位于索引1的位置");
-        Assert.AreEqual(0, XView.openedView.IndexOf(view2), "view2应当位于索引0的位置");
+        Assert.That(XView.openedView.IndexOf(view1), Is.EqualTo(1), "view1应当位于索引1的位置");
+        Assert.That(XView.openedView.IndexOf(view2), Is.EqualTo(0), "view2应当位于索引0的位置");
 
         // 测试view被添加到above视图之后
         XView.openedView.Clear();
         XView.Sort(view1, null, null);
         XView.Sort(view2, null, view1);
-        Assert.AreEqual(0, XView.openedView.IndexOf(view1), "view1应当位于索引0的位置");
-        Assert.AreEqual(1, XView.openedView.IndexOf(view2), "view2应当位于索引1的位置");
+        Assert.That(XView.openedView.IndexOf(view1), Is.EqualTo(0), "view1应当位于索引0的位置");
+        Assert.That(XView.openedView.IndexOf(view2), Is.EqualTo(1), "view2应当位于索引1的位置");
 
         // 测试below和above都为null时，view被添加到末尾
         XView.openedView.Clear();
         XView.Sort(view1, null, null);
         XView.Sort(view2, null, null);
-        Assert.AreEqual(0, XView.openedView.IndexOf(view1), "view1应当位于索引0的位置");
-        Assert.AreEqual(1, XView.openedView.IndexOf(view2), "view2应当位于索引1的位置");
+        Assert.That(XView.openedView.IndexOf(view1), Is.EqualTo(0), "view1应当位于索引0的位置");
+        Assert.That(XView.openedView.IndexOf(view2), Is.EqualTo(1), "view2应当位于索引1的位置");
 
         // 渲染顺序测试
         // 测试FixedRQ的渲染顺序
@@ -734,8 +734,8 @@ public class TestXView
         myHandler.lastSetOrderView = null;
         myHandler.lastSetOrderValue = 0;
         XView.Sort(view1, null, null);
-        Assert.AreSame(view1, myHandler.lastSetOrderView, "SetOrder方法应当使用正确的视图参数");
-        Assert.AreEqual(500, myHandler.lastSetOrderValue, "普通视图的渲染顺序应当按公式计算");
+        Assert.That(myHandler.lastSetOrderView, Is.SameAs(view1), "SetOrder方法应当使用正确的视图参数");
+        Assert.That(myHandler.lastSetOrderValue, Is.EqualTo(500), "普通视图的渲染顺序应当按公式计算");
 
         // 焦点状态测试
         // 测试EventType.Slience类型视图
@@ -749,9 +749,9 @@ public class TestXView
         myHandler.lastFocusedView = null;
         // Sort应该使Slience类型视图失去焦点
         XView.Sort(silenceView, null, null);
-        Assert.IsNull(myHandler.lastFocusedView, "Slience类型视图不应调用SetFocus方法");
-        Assert.IsTrue(blurCalled, "Slience类型视图应当调用OnBlur方法");
-        Assert.IsFalse(XView.focusedView[silenceView], "Slience类型视图在focusedView中的标记应为false");
+        Assert.That(myHandler.lastFocusedView, Is.Null, "Slience类型视图不应调用SetFocus方法");
+        Assert.That(blurCalled, Is.True, "Slience类型视图应当调用OnBlur方法");
+        Assert.That(XView.focusedView[silenceView], Is.False, "Slience类型视图在focusedView中的标记应为false");
 
         // 测试EventType.Static和Dynamic类型视图
         XView.openedView.Clear();
@@ -771,13 +771,13 @@ public class TestXView
 
         // Sort后，Static类型视图应该获得焦点
         XView.Sort(staticView, null, null);
-        Assert.IsTrue(staticFocusCalled, "Static类型视图应当调用OnFocus方法");
-        Assert.IsTrue(XView.focusedView[staticView], "Static类型视图在focusedView中的标记应为true");
+        Assert.That(staticFocusCalled, Is.True, "Static类型视图应当调用OnFocus方法");
+        Assert.That(XView.focusedView[staticView], Is.True, "Static类型视图在focusedView中的标记应为true");
 
         // 添加Dynamic类型视图后，由于lastFocused已为true，Dynamic视图不应获得焦点
         XView.Sort(dynamicView, staticView, null);
-        Assert.IsFalse(dynamicFocusCalled, "当lastFocused为true时，Dynamic类型视图不应调用OnFocus方法");
-        Assert.IsFalse(XView.focusedView.ContainsKey(dynamicView) && XView.focusedView[dynamicView], "Dynamic类型视图在focusedView中的标记应为false");
+        Assert.That(dynamicFocusCalled, Is.False, "当lastFocused为true时，Dynamic类型视图不应调用OnFocus方法");
+        Assert.That(XView.focusedView.ContainsKey(dynamicView) && XView.focusedView[dynamicView], Is.False, "Dynamic类型视图在focusedView中的标记应为false");
 
         // 测试Panel为null的情况
         var testView = XView.Open(new XView.Meta("TestView"));
@@ -785,7 +785,7 @@ public class TestXView
         int initialCount = XView.openedView.Count;
         LogAssert.Expect(LogType.Error, new Regex("XView.Sort: view .* has already been destroyed."));
         XView.Sort(null, null, null); // 调用Sort应该清理无效视图
-        Assert.AreEqual(initialCount - 1, XView.openedView.Count, "Panel为null的视图应当从openedView列表中移除");
+        Assert.That(XView.openedView.Count, Is.EqualTo(initialCount - 1), "Panel为null的视图应当从openedView列表中移除");
     }
 
     [Test]
@@ -794,7 +794,7 @@ public class TestXView
         var view = XView.Open(testMeta);
         myHandler.lastFocusedView = null;
         XView.Focus(view);
-        Assert.AreSame(view, myHandler.lastFocusedView, "Focus方法应当正确设置视图的焦点状态");
+        Assert.That(myHandler.lastFocusedView, Is.SameAs(view), "Focus方法应当正确设置视图的焦点状态");
     }
 
     [Test]
@@ -804,13 +804,13 @@ public class TestXView
         // 通过Load加载，不会自动加入openedView列表
         XView.Load(testMeta, parentTransform, false);
         var foundView = XView.Find(testMeta);
-        Assert.IsNull(foundView);
+        Assert.That(foundView, Is.Null);
 
         // 通过Open加载，会自动加入openedView列表
         var openedView = XView.Open(testMeta);
         foundView = XView.Find(testMeta);
-        Assert.IsNotNull(foundView);
-        Assert.AreSame(openedView, foundView);
+        Assert.That(foundView, Is.Not.Null);
+        Assert.That(foundView, Is.SameAs(openedView));
 
         if (parentTransform != null) UnityEngine.Object.Destroy(parentTransform.gameObject);
     }
