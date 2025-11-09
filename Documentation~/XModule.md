@@ -5,7 +5,7 @@
 [![DeepWiki](https://img.shields.io/badge/DeepWiki-Explore-blue)](https://deepwiki.com/eframework-io/Unity.MVVM)
 [![Discord](https://img.shields.io/discord/1422114598835851286?label=Discord&logo=discord)](https://discord.gg/XMPx2wXSz3)
 
-XModule 提供了业务开发的基础模块，支持模块的生命周期管理和事件系统集成。
+提供了业务开发的基础模块，支持模块的生命周期管理和事件系统集成。
 
 ## 功能特性
 

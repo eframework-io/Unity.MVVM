@@ -5,7 +5,7 @@
 [![DeepWiki](https://img.shields.io/badge/DeepWiki-Explore-blue)](https://deepwiki.com/eframework-io/Unity.MVVM)
 [![Discord](https://img.shields.io/discord/1422114598835851286?label=Discord&logo=discord)](https://discord.gg/XMPx2wXSz3)
 
-XScene 提供了业务开发的基础场景，支持业务场景的切换及其生命周期管理。
+提供了业务开发的基础场景，支持业务场景的切换及其生命周期管理。
 
 ## 功能特性
 

@@ -5,7 +5,7 @@
 [![DeepWiki](https://img.shields.io/badge/DeepWiki-Explore-blue)](https://deepwiki.com/eframework-io/Unity.MVVM)
 [![Discord](https://img.shields.io/discord/1422114598835851286?label=Discord&logo=discord)](https://discord.gg/XMPx2wXSz3)
 
-XView 提供了业务开发的基础视图，通过适配器模式实现了视图的管理功能。
+提供了业务开发的基础视图，通过适配器模式实现了视图的管理功能。
 
 ## 功能特性
 
