@@ -49,6 +49,6 @@
     "EFramework.Unity.MVVM"
   ],
   "dependencies": {
-    "io.eframework.unity.utility": "1.0.0"
+    "io.eframework.unity.utility": "1.1.0"
   }
 }
