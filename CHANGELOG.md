@@ -1,5 +1,12 @@
 # 更新记录
 
+## [1.1.0] - 2025-11-23
+### 修复
+- 修复 XView.Event.Clear 函数的 puer 适配器异常
+
+### 变更
+- 重构 XView.Event.Clear 函数名为 UnregisterAll
+
 ## [1.0.2] - 2025-11-09
 ### 修复
 - 更正 package.json 中的产品名称

@@ -5,8 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using UnityEngine;
 using EFramework.Unity.Utility;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace EFramework.Unity.MVVM
@@ -878,9 +878,9 @@ namespace EFramework.Unity.MVVM
             public virtual bool Unregister<T1, T2, T3>(Enum id, Action<T1, T2, T3> callback) { return Unregister(id.GetHashCode(), callback); }
 
             /// <summary>
-            /// Clear 清除事件注册。
+            /// UnregisterAll 清除事件注册。
             /// </summary>
-            public virtual void Clear()
+            public virtual void UnregisterAll()
             {
                 foreach (var kvp in proxies)
                 {
@@ -1146,7 +1146,7 @@ namespace EFramework.Unity.MVVM
             /// <summary>
             /// OnDisable 在视图禁用时调用。
             /// </summary>
-            public virtual void OnDisable() { Event?.Clear(); }
+            public virtual void OnDisable() { Event?.UnregisterAll(); }
 
             /// <summary>
             /// OnClose 在视图关闭时调用。

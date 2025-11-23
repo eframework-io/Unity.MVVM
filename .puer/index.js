@@ -110,7 +110,7 @@ class XModuleBase {
 
     Stop() {
         this.Enabled = false
-        if (this.Event) this.Event.Clear()
+        if (this.Event) this.Event.UnregisterAll()
         this.Reset()
         XLog.Notice("Module has been stopped.", this.Tags);
     }
@@ -191,7 +191,7 @@ class XViewEvent extends XEvent.Manager {
 
     Notify(id, ...args) { this.context.Notify(id, ...args) }
 
-    Clear() {
+    UnregisterAll() {
         if (this.proxies) {
             this.proxies.forEach((list, id) => {
                 for (const proxy of list) {
@@ -200,7 +200,7 @@ class XViewEvent extends XEvent.Manager {
             })
             this.proxies.clear()
         }
-        super.Clear()
+        super.UnregisterAll()
     }
 }
 
@@ -324,7 +324,7 @@ class XViewBase extends CS.UnityEngine.MonoBehaviour {
 
     OnDisable() {
         if (this.event) {
-            this.event.Clear()
+            this.event.UnregisterAll()
         }
     }
 

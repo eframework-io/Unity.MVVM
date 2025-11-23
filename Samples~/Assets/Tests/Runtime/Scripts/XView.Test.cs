@@ -3,15 +3,15 @@
 // license that can be found in the LICENSE file.
 
 using System;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using EFramework.Unity.MVVM;
+using EFramework.Unity.Utility;
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
-using NUnit.Framework;
-using EFramework.Unity.MVVM;
-using EFramework.Unity.Utility;
 
 /// <summary>
 /// TestXView 是 XView 的单元测试。
@@ -296,7 +296,7 @@ public class TestXView
                 Assert.That(called, Is.False, "非泛型注销事件后触发通知应当不调用回调函数。");
 
                 Assert.That(view.Event.Register(MyEvent.Event1, callback, false), Is.True, "非泛型注册事件应当成功。");
-                view.Event.Clear();
+                view.Event.UnregisterAll();
                 called = false;
                 context.Notify(MyEvent.Event1);
                 Assert.That(called, Is.False, "非泛型清除事件后触发通知应当不调用回调函数。");
@@ -325,7 +325,7 @@ public class TestXView
                 Assert.That(called, Is.False, "泛型 <T1> 注销事件后触发通知应当不调用回调函数。");
 
                 Assert.That(view.Event.Register<int>(MyEvent.Event1, callback, false), Is.True, "泛型 <T1> 注册事件应当成功。");
-                view.Event.Clear();
+                view.Event.UnregisterAll();
                 called = false;
                 context.Notify(MyEvent.Event1);
                 Assert.That(called, Is.False, "泛型 <T1> 清除事件后触发通知应当不调用回调函数。");
@@ -356,7 +356,7 @@ public class TestXView
                 Assert.That(called, Is.False, "泛型 <T1, T2> 注销事件后触发通知应当不调用回调函数。");
 
                 Assert.That(view.Event.Register<int, int>(MyEvent.Event1, callback, false), Is.True, "泛型 <T1, T2> 注册事件应当成功。");
-                view.Event.Clear();
+                view.Event.UnregisterAll();
                 called = false;
                 context.Notify(MyEvent.Event1);
                 Assert.That(called, Is.False, "泛型 <T1, T2> 清除事件后触发通知应当不调用回调函数。");
@@ -389,7 +389,7 @@ public class TestXView
                 Assert.That(called, Is.False, "泛型 <T1, T2, T3> 注销事件后触发通知应当不调用回调函数。");
 
                 Assert.That(view.Event.Register<int, int, int>(MyEvent.Event1, callback, false), Is.True, "泛型 <T1, T2, T3> 注册事件应当成功。");
-                view.Event.Clear();
+                view.Event.UnregisterAll();
                 called = false;
                 context.Notify(MyEvent.Event1);
                 Assert.That(called, Is.False, "泛型 <T1, T2, T3> 清除事件后触发通知应当不调用回调函数。");
